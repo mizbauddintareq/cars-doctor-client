@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
-const OrdersRow = ({ data }) => {
-  const { serviceName, price, phone, service, customer } = data;
+const OrdersRow = ({ data, handleDelete, handleStatus }) => {
+  const { _id, serviceName, price, phone, service, customer, status } = data;
 
-  const [orders, setOrder] = useState({});
+  const [orders, setOrder] = useState([]);
 
   useEffect(() => {
     fetch(`http://localhost:5000/service/${service}`)
@@ -15,7 +15,7 @@ const OrdersRow = ({ data }) => {
   return (
     <tr>
       <th>
-        <button>
+        <button onClick={() => handleDelete(_id)}>
           <FaTrash />
         </button>
       </th>
@@ -37,6 +37,11 @@ const OrdersRow = ({ data }) => {
         <span className="badge badge-ghost badge-sm">{phone}</span>
       </td>
       <td>{price}</td>
+      <td>
+        <button onClick={() => handleStatus(_id)} className="btn btn-ghost">
+          {status ? status : "Pending"}
+        </button>
+      </td>
     </tr>
   );
 };
