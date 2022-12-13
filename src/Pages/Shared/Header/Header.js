@@ -6,6 +6,9 @@ const Header = () => {
       <Link to="/" className="font-semibold">
         Home
       </Link>
+      <Link to="/login" className="font-semibold">
+        login
+      </Link>
     </>
   );
 

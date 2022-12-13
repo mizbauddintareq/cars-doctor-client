@@ -17,8 +17,8 @@ const About = () => {
           />
         </div>
         <div className="w-1/2">
-          <p className="text-2xl my-5 text-red-500 font-bold">About Us</p>
-          <h1 className="text-5xl font-bold">
+          <p className="text-2xl text-red-500 font-bold">About Us</p>
+          <h1 className="text-5xl font-bold pt-6">
             We are qualified <br /> & of experience <br /> in this field
           </h1>
           <p className="py-6">
