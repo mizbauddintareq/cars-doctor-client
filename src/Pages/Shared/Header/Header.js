@@ -1,14 +1,36 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
+import { AuthContext } from "../../../context/AuthProvider";
 const Header = () => {
+  const { user, signOutUser } = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {})
+      .catch((error) => {});
+  };
+
   const menuItems = (
     <>
-      <Link to="/" className="font-semibold">
-        Home
-      </Link>
-      <Link to="/login" className="font-semibold">
-        login
-      </Link>
+      <li>
+        <Link to="/" className="font-semibold">
+          Home
+        </Link>
+      </li>
+      {user?.uid ? (
+        <li>
+          <button onClick={handleSignOut} className="font-semibold">
+            Logout
+          </button>
+        </li>
+      ) : (
+        <li>
+          <Link to="/login" className="font-semibold">
+            login
+          </Link>
+        </li>
+      )}
     </>
   );
 

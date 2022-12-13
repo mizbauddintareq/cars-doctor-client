@@ -1,9 +1,27 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import image from "../../assets/images/login/login.svg";
+import { AuthContext } from "../../context/AuthProvider";
 
 const SignUp = () => {
+  const { createUser } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    createUser(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        console.error(errorCode);
+      });
   };
   return (
     <div className="hero my-20 w-full">

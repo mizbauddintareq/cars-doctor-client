@@ -1,8 +1,26 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import image from "../../assets/images/login/login.svg";
+import { AuthContext } from "../../context/AuthProvider";
 const Login = () => {
+  const { signInUser } = useContext(AuthContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    signInUser(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        console.error(errorCode);
+      });
   };
 
   return (
