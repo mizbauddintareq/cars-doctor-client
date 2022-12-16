@@ -5,7 +5,7 @@ import OrdersRow from "./OrdersRow";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user, signOutUser } = useContext(AuthContext);
 
   useEffect(() => {
     fetch(`http://localhost:5000/orders?email=${user?.email}`, {
@@ -13,7 +13,12 @@ const Orders = () => {
         authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 403 || res.status === 401) {
+          signOutUser();
+        }
+        return res.json();
+      })
       .then((data) => {
         setOrders(data);
       })
@@ -80,7 +85,7 @@ const Orders = () => {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => (
+          {orders?.map((order) => (
             <OrdersRow
               key={order._id}
               data={order}
